@@ -1,0 +1,29 @@
+# One-command local run of the insights API.
+#
+#   cp .env.example .env   # once (dev defaults: MOCK_LLM=true, no API key)
+#   docker compose up       # http://localhost:8787
+#
+# To use a real provider instead, set MOCK_LLM=false and ANTHROPIC_API_KEY in
+# .env (or in backend/.env) and re-run.
+services:
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: zonify-backend:local
+    env_file:
+      # Root .env supplies dev defaults; backend/.env (if present) overrides
+      # with project-specific values such as a real API key.
+      - path: ./.env
+        required: false
+      - path: ./backend/.env
+        required: false
+    ports:
+      - "${PORT:-8787}:8787"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:8787/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 5s
+    restart: unless-stopped

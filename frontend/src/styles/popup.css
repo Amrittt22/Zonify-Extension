@@ -1,0 +1,149 @@
+.popup {
+  width: 360px;
+  height: 520px;
+  padding: 16px 20px 18px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* --- Header ---------------------------------------------------------- */
+.popup__header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 44px;
+  flex: none;
+}
+
+.popup__logo {
+  color: var(--accent);
+  display: inline-flex;
+}
+
+.popup__title {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.popup__header .icon-btn {
+  margin-left: auto;
+  margin-right: -10px;
+}
+
+/* --- Mode tabs -------------------------------------------------------- */
+.popup__tabs {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+  flex: none;
+}
+
+.popup__tabs .pill {
+  flex: 1;
+}
+
+/* --- Progress ring ---------------------------------------------------- */
+.ring-wrap {
+  position: relative;
+  width: 208px;
+  height: 208px;
+  margin: 18px auto 0;
+  flex: none;
+}
+
+.ring-wrap__svg {
+  display: block;
+}
+
+.ring-track {
+  stroke: var(--border);
+}
+
+.ring-progress {
+  stroke: var(--accent);
+  transition: stroke-dashoffset 0.35s linear;
+}
+
+.ring-progress[data-variant='break'] {
+  stroke: var(--accent-break);
+}
+
+.ring-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  pointer-events: none;
+}
+
+.ring-center__time {
+  font-size: 52px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+
+.ring-center__sub {
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+/* --- Controls --------------------------------------------------------- */
+.popup__controls {
+  display: flex;
+  gap: 10px;
+  margin-top: auto;
+  flex: none;
+}
+
+.popup__controls .btn--primary,
+.popup__controls .btn--break {
+  flex: 2;
+}
+
+.popup__controls .btn--secondary {
+  flex: 1;
+}
+
+/* --- Footer card ------------------------------------------------------ */
+.popup__footer {
+  margin-top: 14px;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 12px 14px;
+  min-height: 62px;
+  font-size: 13px;
+}
+
+.popup__footer strong {
+  font-weight: 700;
+}
+
+.popup__footer-left {
+  color: var(--muted);
+}
+
+.popup__footer-right {
+  color: var(--text);
+  font-weight: 500;
+  text-align: right;
+}
+
+.popup__footer--break .popup__footer-left {
+  color: var(--accent-break);
+  font-weight: 500;
+}

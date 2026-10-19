@@ -1,0 +1,30 @@
+{
+  "installId": "7f9e2b1c-4a6d-4e8f-9b3a-1c2d3e4f5a6b",
+  "summary": {
+    "week": "Oct 13 - Oct 19",
+    "totalFocusMinutes": 720,
+    "sessionsCompleted": 14,
+    "sessionsStartedButEndedEarly": 3,
+    "streakDays": 6,
+    "minutesByDay": {
+      "Mon": 90,
+      "Tue": 120,
+      "Wed": 60,
+      "Thu": 110,
+      "Fri": 140,
+      "Sat": 130,
+      "Sun": 70
+    },
+    "minutesByHourBucket": {
+      "morning": 260,
+      "afternoon": 300,
+      "evening": 160
+    },
+    "topBlockedDomains": [
+      { "domain": "youtube.com", "attempts": 84 },
+      { "domain": "twitter.com", "attempts": 41 },
+      { "domain": "reddit.com", "attempts": 17 }
+    ],
+    "previousWeekFocusMinutes": 540
+  }
+}

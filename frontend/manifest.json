@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "Zonify",
+  "version": "1.0.0",
+  "description": "Pomodoro timer and site blocker that keeps you in the zone. Get in the zone.",
+  "action": {
+    "default_popup": "src/popup/index.html",
+    "default_title": "Zonify"
+  },
+  "background": {
+    "service_worker": "src/background/service-worker.ts",
+    "type": "module"
+  },
+  "options_page": "src/options/index.html",
+  "icons": {
+    "16": "src/assets/icons/icon16.png",
+    "32": "src/assets/icons/icon32.png",
+    "48": "src/assets/icons/icon48.png",
+    "128": "src/assets/icons/icon128.png"
+  },
+  "permissions": ["storage", "alarms", "notifications", "declarativeNetRequest"],
+  "host_permissions": ["<all_urls>"],
+  "web_accessible_resources": [
+    {
+      "resources": ["src/blocked/blocked.html"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

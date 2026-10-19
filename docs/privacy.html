@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zonify — Privacy Policy</title>
+  <style>
+    :root { color-scheme: light dark; }
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 4rem;
+      line-height: 1.6;
+      color: #1a1a1a;
+      background: #fafafa;
+    }
+    @media (prefers-color-scheme: dark) {
+      body { color: #e6e6e6; background: #1a1a1a; }
+      a { color: #8ab4ff; }
+      code, pre { background: #2a2a2a; }
+      table { border-color: #444; }
+      th, td { border-color: #444; }
+    }
+    h1 { font-size: 1.75rem; margin-bottom: 0.25rem; }
+    h2 { margin-top: 2rem; font-size: 1.25rem; }
+    h3 { margin-top: 1.25rem; font-size: 1.05rem; }
+    .muted { color: #666; font-size: 0.9rem; }
+    ul { padding-left: 1.25rem; }
+    li { margin: 0.35rem 0; }
+    table { width: 100%; border-collapse: collapse; margin: 0.75rem 0; }
+    th, td { border: 1px solid #ccc; padding: 0.5rem 0.6rem; text-align: left; vertical-align: top; }
+    th { background: rgba(0,0,0,0.05); }
+    code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 0.9em; background: #eee; padding: 0.1em 0.35em; border-radius: 4px; }
+    pre { background: #eee; padding: 0.75rem; border-radius: 6px; overflow-x: auto; }
+    .callout { background: rgba(0,0,0,0.04); border-left: 3px solid #888; padding: 0.75rem 1rem; margin: 1rem 0; }
+    a { color: #1a5fb4; }
+    footer { margin-top: 3rem; font-size: 0.85rem; color: #666; border-top: 1px solid #ccc; padding-top: 1rem; }
+  </style>
+</head>
+<body>
+  <h1>Zonify — Privacy Policy</h1>
+  <p class="muted">Last updated: October 19, 2026</p>
+
+  <p>
+    Zonify is a Pomodoro timer and site blocker for Chrome. It runs entirely on
+    your device. This policy explains what data Zonify stores, when (and only
+    when) it sends anything over the network, and how you can delete it.
+  </p>
+
+  <div class="callout">
+    <strong>Short version:</strong> Zonify makes no network requests at all
+    unless you turn on the optional AI insights feature. With insights off,
+    nothing leaves your machine.
+  </div>
+
+  <h2>1. Data stored on your device</h2>
+  <p>
+    Zonify stores all of its data in <code>chrome.storage.local</code> on your
+    device. Nothing is uploaded to a server by the extension itself. The data
+    includes:
+  </p>
+  <ul>
+    <li><strong>Settings</strong> — focus/break durations, your blocklist, and whether AI insights are enabled.</li>
+    <li><strong>Timer state</strong> — current phase, end time, paused time remaining.</li>
+    <li><strong>Session history</strong> — for focus sessions: a start timestamp, duration, and whether the session ended normally or early. Used to compute streaks and daily totals.</li>
+    <li><strong>Statistics</strong> — sessions completed, sessions started but ended early, total focus minutes, streak days, focus minutes by day of week (Mon–Sun), focus minutes by time-of-day bucket (morning / afternoon / evening), and per-domain blocked-attempt counts.</li>
+    <li><strong>Insights cache</strong> — if you use AI insights, the most recent generated summary and the week it belongs to, plus a randomly generated install ID used only for fair-use rate limiting.</li>
+  </ul>
+  <p>
+    Zonify does not read page content, form input, or browsing history. The
+    <code>&lt;all_urls&gt;</code> host permission exists solely so
+    <code>declarativeNetRequest</code> can block the sites on your blocklist
+    while a focus session is running.
+  </p>
+
+  <h2>2. Optional AI insights (the only network feature)</h2>
+  <p>
+    AI insights are <strong>off by default</strong>. When you enable them and
+    click <em>Generate insight</em>, Zonify sends one request to the backend URL
+    you configured. The request contains <strong>only aggregate weekly numbers</strong>:
+  </p>
+  <table>
+    <thead><tr><th>Field</th><th>What it is</th></tr></thead>
+    <tbody>
+      <tr><td><code>installId</code></td><td>A random UUID generated once on your device, used only for fair-use rate limiting. Not linked to your identity.</td></tr>
+      <tr><td><code>week</code></td><td>A human-readable label for the week (e.g. "Oct 13 - Oct 19").</td></tr>
+      <tr><td><code>totalFocusMinutes</code></td><td>Total focus minutes for the week.</td></tr>
+      <tr><td><code>sessionsCompleted</code></td><td>Number of focus sessions completed.</td></tr>
+      <tr><td><code>sessionsStartedButEndedEarly</code></td><td>Number of sessions you stopped before finishing.</td></tr>
+      <tr><td><code>streakDays</code></td><td>Your current daily streak.</td></tr>
+      <tr><td><code>minutesByDay</code></td><td>Focus minutes per day of week (Mon–Sun).</td></tr>
+      <tr><td><code>minutesByHourBucket</code></td><td>Focus minutes by time of day: morning, afternoon, evening.</td></tr>
+      <tr><td><code>topBlockedDomains</code></td><td>Your top 3 blocked sites by attempt count, with counts (e.g. youtube.com, 84). Domains are normalized and must pass a hostname check; entries that are not valid public hostnames (such as <code>localhost</code>) are dropped.</td></tr>
+      <tr><td><code>previousWeekFocusMinutes</code></td><td>Prior week's focus minutes, or <code>null</code> if there were none.</td></tr>
+    </tbody>
+  </table>
+  <p><strong>Never sent:</strong> URLs you visited, page titles, browsing history,
+  timestamps, individual session records, your full blocklist, or any content
+  from pages you viewed. The backend's request schema is strict and rejects any
+  additional field.</p>
+  <p>
+    <em>Test connection</em> sends a single <code>GET /health</code> request with
+    no data.
+  </p>
+  <p>
+    The backend you point Zonify at is your choice. The reference backend
+    forwards the aggregate summary above to an LLM provider (Anthropic by
+    default) to generate the short summary you see. If you self-host the backend,
+    only you (and whichever provider you configure) see that data. Please review
+    the privacy policy of any backend and provider you use.
+  </p>
+
+  <h2>3. Permissions</h2>
+  <ul>
+    <li><code>storage</code> — save settings, timer state, sessions, and stats locally.</li>
+    <li><code>alarms</code> — drive the timer so it survives closing the popup.</li>
+    <li><code>notifications</code> — one notification when a focus session completes.</li>
+    <li><code>declarativeNetRequest</code> — block sites on your blocklist during focus sessions.</li>
+    <li><code>&lt;all_urls&gt;</code> (host permission) — required scope for the blocking rules above.</li>
+  </ul>
+
+  <h2>4. Third parties</h2>
+  <p>
+    Zonify contains no analytics, advertising, or tracking SDKs. With AI
+    insights disabled, it makes no network requests at all. With insights
+    enabled, data flows only to the backend URL you configured and onward to the
+    LLM provider that backend uses. Zonify itself does not sell or share your
+    data for advertising.
+  </p>
+
+  <h2>5. Data retention and deletion</h2>
+  <ul>
+    <li>All extension data lives in <code>chrome.storage.local</code> on your device until you uninstall Zonify or clear the extension's storage.</li>
+    <li>The backend is stateless with respect to your content: it does not store your summaries. It keeps only short-lived, in-memory rate-limit counters (keyed by IP and install ID) to protect the service; these reset automatically.</li>
+    <li>You can turn AI insights off at any time in <em>Timer → AI insights</em>. No further requests are made; the cached insight remains until it is overwritten or cleared with your other data.</li>
+  </ul>
+
+  <h2>6. Children</h2>
+  <p>
+    Zonify is not directed at children under 13 and does not knowingly collect
+    personal information from them.
+  </p>
+
+  <h2>7. Changes to this policy</h2>
+  <p>
+    If this policy changes, the updated version will be published with the
+    extension and the "Last updated" date above will change. Material changes
+    will be noted in the project's release notes.
+  </p>
+
+  <h2>8. Contact</h2>
+  <p>
+    Privacy questions can be raised through the project's issue tracker (linked
+    from the repository's README) or via the contact email listed in the Chrome
+    Web Store listing for Zonify.
+  </p>
+
+  <footer>
+    Zonify — "Get in the zone." This policy applies to the Zonify browser
+    extension. The extension is distributed under the MIT license; this policy is
+    provided for transparency and is not legal advice.
+  </footer>
+</body>
+</html>

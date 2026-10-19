@@ -1,0 +1,127 @@
+/* Blocked page — shown by DNR redirect while a focus session runs. */
+.blocked {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 32px;
+}
+
+/* 72px lock ring */
+.lock-ring {
+  width: 72px;
+  height: 72px;
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  margin-bottom: 28px;
+}
+
+.lock-ring--dim {
+  border-color: var(--muted);
+  color: var(--muted);
+}
+
+.blocked__title {
+  margin: 0 0 12px;
+  font-size: clamp(34px, 6vw, 52px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.blocked__copy {
+  margin: 0 0 36px;
+  max-width: 480px;
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.blocked__copy strong {
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* Live countdown — spec: 72px accent */
+.blocked__count {
+  font-size: clamp(56px, 12vw, 72px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 28px;
+}
+
+.blocked__count--break {
+  color: var(--accent-break);
+}
+
+.blocked__count--done {
+  color: var(--muted);
+}
+
+/* Session dots */
+.session-dots {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 36px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.dot--done {
+  background: var(--accent);
+}
+
+.dot--current {
+  background: transparent;
+  border: 2px solid var(--accent);
+}
+
+.dot--future {
+  background: transparent;
+  border: 2px solid var(--border);
+}
+
+.blocked__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.btn--wide {
+  min-width: 220px;
+}
+
+.text-btn {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 12px 16px; /* ≥44px touch target */
+  border-radius: 12px;
+}
+
+.text-btn:hover {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.text-btn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}

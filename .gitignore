@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+coverage/
+
+# Environment / secrets
+.env
+
+# Logs
+*.log
+npm-debug.log*
+
+# Packaged extension
+zonify.zip
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
