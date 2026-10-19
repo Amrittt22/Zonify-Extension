@@ -153,6 +153,8 @@ docker compose up            # http://localhost:8787, with a /health healthcheck
 
 ## Deploying (Render / Railway / Fly)
 
+A live instance runs at `https://zonify-backend-co8a.onrender.com` (mock mode).
+
 - Put `ANTHROPIC_API_KEY` in the platform's **secret store**, never in the
   image or the repo.
 - Set `TRUST_PROXY=true` — platforms run you behind a proxy, and without it

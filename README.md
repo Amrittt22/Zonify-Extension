@@ -152,6 +152,10 @@ you enable it, the extension makes no network requests at all.
    ```
    (`MOCK_LLM=true` works too and needs no API key: you get a canned insight
    built from your numbers.)
+
+   A hosted instance is available at
+   `https://zonify-backend-co8a.onrender.com` (mock mode) — use that URL in
+   step 2 instead of running locally. Free tier cold-starts take 20–50 s.
 2. In the extension: **Timer → AI insights** → toggle on → *Test connection*
    should report *Reachable*.
 3. Finish 3 focus sessions, then **Stats → Generate insight**.
