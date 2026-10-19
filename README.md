@@ -9,6 +9,11 @@ Zonify-Extension/
 └─ backend/    Insights API — strict-schema proxy to the LLM provider
 ```
 
+## Screenshots
+
+<!-- TODO: replace with a real screenshot/GIF of the popup, blocked page, and Stats tab. -->
+![Zonify popup placeholder](docs/screenshot.png)
+
 ## frontend — Chrome extension
 
 TypeScript · React 18 · Vite · `@crxjs/vite-plugin` · no accounts, no remote
@@ -20,6 +25,16 @@ stats.
 The Stats tab also has an opt-in **weekly insight** card: with your permission it
 sends aggregate weekly numbers to `backend/` and shows a short AI-written
 summary. Off by default.
+
+**Install from a release (recommended)**
+
+1. Download the latest `zonify-v*.zip` from the
+   [Releases page](https://github.com/Amrittt22/Zonify-Extension/releases/latest).
+2. Unzip it (you should see `manifest.json` at the top level of the folder).
+3. Open `chrome://extensions` → enable **Developer mode** → **Load unpacked** →
+   select the unzipped folder.
+
+**Build from source**
 
 ```bash
 cd frontend

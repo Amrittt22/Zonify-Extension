@@ -1,0 +1,83 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build and publish release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Build extension
+        working-directory: frontend
+        run: npm run build
+
+      - name: Verify tag matches manifest version
+        working-directory: frontend
+        run: |
+          TAG_VERSION="${GITHUB_REF_NAME#v}"
+          MANIFEST_VERSION="$(node -p "require('./manifest.json').version")"
+          echo "Tag version:      $TAG_VERSION"
+          echo "Manifest version: $MANIFEST_VERSION"
+          if [ "$TAG_VERSION" != "$MANIFEST_VERSION" ]; then
+            echo "::error::Tag version ($TAG_VERSION) does not match manifest version ($MANIFEST_VERSION)"
+            exit 1
+          fi
+
+      - name: Verify build output
+        working-directory: frontend
+        run: npm run verify:dist
+
+      - name: Zip extension (manifest at zip root)
+        run: |
+          cd frontend/dist
+          zip -r "../../zonify-${GITHUB_REF_NAME}.zip" .
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "Zonify ${{ github.ref_name }}"
+          generate_release_notes: true
+          body: |
+            ## Install (Chrome / Edge / Brave)
+
+            1. Download `zonify-${{ github.ref_name }}.zip` below and unzip it.
+            2. Open `chrome://extensions`.
+            3. Enable **Developer mode** (top right).
+            4. Click **Load unpacked** and select the unzipped folder (the one containing `manifest.json`).
+            5. Pin the Zonify icon to the toolbar.
+
+            ## What it does
+
+            Pomodoro timer + site blocker. Focus sessions block your blocklist via
+            `declarativeNetRequest`; the timer survives closing the popup and
+            restarting Chrome. Stats track focus time, streaks, and top blocked
+            domains. Optional AI weekly insight (off by default) sends only
+            aggregate weekly numbers to a backend you configure.
+
+            ## Known limitations
+
+            - Unpacked install only (no Chrome Web Store listing yet).
+            - AI insights require a running backend (see the `zonify-backend` repo).
+            - Durations can be set as low as 1 minute.
+          files: |
+            zonify-${{ github.ref_name }}.zip
