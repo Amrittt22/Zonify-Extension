@@ -9,10 +9,32 @@ Zonify-Extension/
 └─ backend/    Insights API — strict-schema proxy to the LLM provider
 ```
 
-## Screenshots
+## Quick start
 
-<!-- TODO: replace with a real screenshot/GIF of the popup, blocked page, and Stats tab. -->
-![Zonify popup placeholder](docs/screenshot.png)
+To build and load the extension locally:
+
+```bash
+cd frontend
+npm install
+npm test
+npm run build
+```
+
+Then open `chrome://extensions`, enable **Developer mode**, choose **Load
+unpacked**, and select `frontend/dist`.
+
+For the optional insights service, run the backend separately:
+
+```bash
+cd ..\backend
+npm install
+copy .env.example .env       # Windows PowerShell
+npm run build
+npm start
+```
+
+Set `MOCK_LLM=true` in `.env` for local development without an API key. The
+extension and backend setup is documented in the sections below.
 
 ## frontend — Chrome extension
 
@@ -33,6 +55,9 @@ summary. Off by default.
 2. Unzip it (you should see `manifest.json` at the top level of the folder).
 3. Open `chrome://extensions` → enable **Developer mode** → **Load unpacked** →
    select the unzipped folder.
+
+Zonify is currently distributed as a downloadable release and an unpacked
+extension; it is not yet available through the Chrome Web Store.
 
 **Build from source**
 
@@ -103,14 +128,16 @@ pull request, with no secrets required:
 The image job is the one that guards the privacy contract: it fails if the
 strict schema ever starts accepting extra fields.
 
-## Status
+## Project state
 
-| Part | State |
-| --- | --- |
-| `frontend/` | Complete: build green, 35 unit tests passing; manual Chrome checks are the remaining step before publishing |
-| `backend/` | Complete: build green, 44 tests passing, Docker image builds and runs; image smoke-tested with `MOCK_LLM=true` |
-| Wiring | Built and verified end to end — the payload the extension's mapper produces is accepted by the running backend (`200`), and the same request from an unlisted origin is rejected (`403`) |
-| CI | `.github/workflows/ci.yml` — all three jobs green locally (Node 24); `actionlint` clean | |
+- The frontend and backend include automated unit tests, TypeScript
+  type-checking, and production build scripts.
+- GitHub Actions validates the extension build, backend build and tests, and a
+  Docker-based API smoke test on every push and pull request.
+- Manual Chrome validation is still recommended before publishing a release:
+  use the checklist in [`frontend/README.md`](frontend/README.md#manual-test-checklist).
+- The optional AI-insights flow is wired end to end, but requires a running
+  backend with the extension origin listed in `ALLOWED_ORIGINS`.
 
 ## Wiring them together
 

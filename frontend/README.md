@@ -40,6 +40,9 @@ npm run verify:dist  # every manifest reference resolves in dist/ (also runs ins
 
 Optional: `npm run package` produces `zonify.zip` for sharing (load unpacked still requires an extracted folder).
 
+Zonify is currently distributed as a downloadable release and an unpacked
+extension; it is not yet available through the Chrome Web Store.
+
 During development, `npm run dev` starts Vite with HMR for the popup/options pages; reload the extension after service-worker changes.
 
 ## Architecture
