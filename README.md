@@ -3,6 +3,13 @@
 **Get in the zone.** A Pomodoro timer with a site blocker, plus an optional
 AI weekly-insights service that never sees your browsing data.
 
+[![CI](https://github.com/Amrittt22/Zonify-Extension/actions/workflows/ci.yml/badge.svg)](https://github.com/Amrittt22/Zonify-Extension/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/Amrittt22/Zonify-Extension)](https://github.com/Amrittt22/Zonify-Extension/releases/latest)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+**Live backend (mock mode):** https://zonify-backend-co8a.onrender.com — point the
+extension's *AI insights* URL here to try it without running anything locally.
+
 ```
 Zonify-Extension/
 ├─ frontend/   Chrome extension (Manifest V3) — timer, blocker, stats
@@ -130,6 +137,11 @@ strict schema ever starts accepting extra fields.
 
 ## Project state
 
+- **v1.0.0 released** — download the unpacked extension from the
+  [Releases page](https://github.com/Amrittt22/Zonify-Extension/releases/latest).
+- **Live backend** (mock mode) at
+  https://zonify-backend-co8a.onrender.com — point the extension's AI-insights
+  URL here to try it without running anything locally.
 - The frontend and backend include automated unit tests, TypeScript
   type-checking, and production build scripts.
 - GitHub Actions validates the extension build, backend build and tests, and a
