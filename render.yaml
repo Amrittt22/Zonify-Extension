@@ -1,0 +1,26 @@
+# Render Blueprint — deploy the backend from the monorepo.
+# In the Render dashboard: New → Blueprint → select this repo.
+# Render will build backend/ using its Dockerfile and expose port 8787.
+services:
+  - type: web
+    name: zonify-backend
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: MOCK_LLM
+        value: "false"
+      - key: TRUST_PROXY
+        value: "true"
+      - key: MODEL
+        value: claude-haiku-5-5
+      - key: ANTHROPIC_API_KEY
+        sync: false # set manually in the dashboard (secret)
+      - key: ALLOWED_ORIGINS
+        sync: false # set to chrome-extension://<your-id> after publishing
