@@ -114,13 +114,17 @@ Requires Node 20+.
 
 ```bash
 npm install
-cp .env.example .env      # then add your key (or set MOCK_LLM=true)
+cp .env.example .env      # Windows: copy .env.example .env
+                          # then add your key (or set MOCK_LLM=true)
 npm run build
 npm start                  # or: npm run dev (tsx watch)
 
-# smoke test
+# smoke test (origin header required for POST)
 curl http://localhost:8787/health
-curl -X POST http://localhost:8787/v1/insights -d @sample.json
+curl -X POST http://localhost:8787/v1/insights \
+  -H "Content-Type: application/json" \
+  -H "Origin: http://localhost:5173" \
+  -d @sample.json
 ```
 
 Tests (no network, no key):

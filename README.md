@@ -93,11 +93,17 @@ no key of their own.
 ```bash
 cd backend
 npm install
-cp .env.example .env     # add ANTHROPIC_API_KEY, or set MOCK_LLM=true
+cp .env.example .env     # Windows: copy .env.example .env
+                         # add ANTHROPIC_API_KEY, or set MOCK_LLM=true
 npm run build && npm test
 npm start                # http://localhost:8787
 
-curl -X POST http://localhost:8787/v1/insights -d @sample.json
+# smoke test (origin header required for POST)
+curl http://localhost:8787/health
+curl -X POST http://localhost:8787/v1/insights \
+  -H "Content-Type: application/json" \
+  -H "Origin: http://localhost:5173" \
+  -d @sample.json
 ```
 
 Docker: `docker build -t zonify-backend . && docker run -p 8787:8787 -e MOCK_LLM=true zonify-backend`
